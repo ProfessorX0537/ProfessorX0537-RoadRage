@@ -19,7 +19,7 @@ import model.Direction;
 import model.Human;
 import model.Light;
 import model.Terrain;
-// import org.junit.Test;
+//import org.junit.Test;
 
 /**
  * Unit tests for class Human.
