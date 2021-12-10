@@ -21,6 +21,7 @@ import java.awt.Paint;
 import java.awt.RenderingHints;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -48,6 +49,7 @@ public class RoadRagePanel extends JPanel implements PropertyChangeListener, Cha
     /**
      * The UID of this class (to avoid warnings).
      */
+    @Serial
     private static final long serialVersionUID = 4269666L;
 
     /**
@@ -150,7 +152,7 @@ public class RoadRagePanel extends JPanel implements PropertyChangeListener, Cha
 
         drawMap(g2);
 
-        // draw vehicles
+        // TODO draw vehicles
         for (final Vehicle v : myVehicles) {
             final String imageFilename = "icons//" + v.getImageFileName();
             //final String imageFilename = v.getImageFileName();
@@ -190,44 +192,39 @@ public class RoadRagePanel extends JPanel implements PropertyChangeListener, Cha
                 final int leftx = x * SQUARE_SIZE;
 
                 switch (myGrid[y][x]) {
-                    case STREET:
+                    case STREET -> {
                         theGraphics.setPaint(Color.LIGHT_GRAY);
                         theGraphics.fillRect(leftx, topy, SQUARE_SIZE, SQUARE_SIZE);
                         drawStreetLines(theGraphics, x, y);
-                        break;
-
-                    case WALL:
+                    }
+                    case WALL -> {
                         theGraphics.setPaint(Color.BLACK);
                         theGraphics.fillRect(leftx, topy, SQUARE_SIZE, SQUARE_SIZE);
-                        break;
-
-                    case TRAIL:
+                    }
+                    case TRAIL -> {
                         theGraphics.setPaint(Color.YELLOW.darker().darker());
                         theGraphics.fillRect(leftx, topy, SQUARE_SIZE, SQUARE_SIZE);
-                        break;
-
-                    case LIGHT:
+                    }
+                    case LIGHT -> {
                         // draw a circle of appropriate color
                         theGraphics.setPaint(Color.LIGHT_GRAY);
                         theGraphics.fillRect(leftx, topy, SQUARE_SIZE, SQUARE_SIZE);
                         theGraphics.setPaint(myLightColor);
                         theGraphics.fillOval(leftx, topy, SQUARE_SIZE, SQUARE_SIZE);
-                        break;
-                        
-                    case CROSSWALK:
+                    }
+                    case CROSSWALK -> {
                         theGraphics.setPaint(Color.LIGHT_GRAY);
                         theGraphics.fillRect(leftx, topy, SQUARE_SIZE, SQUARE_SIZE);
-                        
                         drawCrossWalkLines(theGraphics, x, y);
-                        
+
                         // draw a small circle of appropriate color centered in the square
                         theGraphics.setPaint(myLightColor);
-                        theGraphics.fillOval(leftx + (int)  (SQUARE_SIZE * CROSSWALK_SCALE),
-                                             topy  + (int) (SQUARE_SIZE * CROSSWALK_SCALE),
-                                             SQUARE_SIZE / 2, SQUARE_SIZE / 2);
-                        break;
-
-                    default:
+                        theGraphics.fillOval(leftx + (int) (SQUARE_SIZE * CROSSWALK_SCALE),
+                                topy + (int) (SQUARE_SIZE * CROSSWALK_SCALE),
+                                SQUARE_SIZE / 2, SQUARE_SIZE / 2);
+                    }
+                    default -> {
+                    }
                 }
 
                 drawDebugInfo(theGraphics, x, y);
@@ -278,23 +275,12 @@ public class RoadRagePanel extends JPanel implements PropertyChangeListener, Cha
         int dy = dx;
 
         switch (dir) {
-            case WEST:
-                dx = 0;
-                break;
-
-            case EAST:
-                dx = SQUARE_SIZE - MARKER_SIZE;
-                break;
-
-            case NORTH:
-                dy = 0;
-                break;
-
-            case SOUTH:
-                dy = SQUARE_SIZE - MARKER_SIZE;
-                break;
-
-            default:
+            case WEST -> dx = 0;
+            case EAST -> dx = SQUARE_SIZE - MARKER_SIZE;
+            case NORTH -> dy = 0;
+            case SOUTH -> dy = SQUARE_SIZE - MARKER_SIZE;
+            default -> {
+            }
         }
 
         x = x + dx;
@@ -311,19 +297,11 @@ public class RoadRagePanel extends JPanel implements PropertyChangeListener, Cha
      */
     private void setLightColor(final Light theLight) {
         switch (theLight) {
-            case GREEN:
-                myLightColor = Color.GREEN.darker();
-                break;
-
-            case RED:
-                myLightColor = Color.RED.darker();
-                break;
-
-            case YELLOW:
-                myLightColor = Color.YELLOW;
-                break;
-
-            default:
+            case GREEN -> myLightColor = Color.GREEN.darker();
+            case RED -> myLightColor = Color.RED.darker();
+            case YELLOW -> myLightColor = Color.YELLOW;
+            default -> {
+            }
         }
     }
     
@@ -419,27 +397,25 @@ public class RoadRagePanel extends JPanel implements PropertyChangeListener, Cha
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
         switch (theEvent.getPropertyName()) {
-            case PROPERTY_GRID:
+            case PROPERTY_GRID -> {
                 myGrid = (Terrain[][]) theEvent.getNewValue();
                 repaint();
-                break;
-            case PROPERTY_LIGHT:
+            }
+            case PROPERTY_LIGHT -> {
                 setLightColor((Light) theEvent.getNewValue());
                 repaint();
-                break;
-            case PROPERTY_VEHICLES:
-                @SuppressWarnings("unchecked") 
-                final List<Vehicle> list = (List<Vehicle>) theEvent.getNewValue();
+            }
+            case PROPERTY_VEHICLES -> {
+                @SuppressWarnings("unchecked") final List<Vehicle> list = (List<Vehicle>) theEvent.getNewValue();
                 myVehicles = new ArrayList<>(list);
                 repaint();
-                break;
-            case PROPERTY_TIME:
+            }
+            case PROPERTY_TIME -> {
                 myTimestep = (Long) theEvent.getNewValue();
                 repaint();
-                break;
-            default:
-                break;  
-            
+            }
+            default -> {
+            }
         }
     }
 

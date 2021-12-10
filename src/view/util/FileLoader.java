@@ -16,12 +16,10 @@ import logic.RoadRage;
 //import model.Atv;
 //import model.Bicycle;
 //import model.Car;
-import model.Direction;
-import model.Human;
+import model.*;
 //import model.Taxi;
-import model.Terrain;
 //import model.Truck;
-import model.Vehicle;
+
 
 /**
  * A utility class for The Road Rage application. 
@@ -103,6 +101,8 @@ public final class FileLoader {
             final int vehicleY = theInput.nextInt();
             final char vehicleDirection = theInput.next().charAt(0);
 
+            //TODO important to print vehicle images
+
             switch (vehicleType) {
 /*              case 'B': // Bicycle
                     vehicles.add(new Bicycle(vehicleX, vehicleY,
@@ -118,13 +118,14 @@ public final class FileLoader {
                     vehicles.add(new Human(vehicleX, vehicleY,
                                              Direction.valueOf(vehicleDirection)));
                     break;
+*/
 
                 case 'T': // Truck
                     vehicles.add(new Truck(vehicleX, vehicleY,
                                              Direction.valueOf(vehicleDirection)));
                     break;
                     
-                case 'X': // Taxi
+/*                case 'X': // Taxi
                     vehicles.add(new Taxi(vehicleX, vehicleY,
                                             Direction.valueOf(vehicleDirection)));
                     break;
