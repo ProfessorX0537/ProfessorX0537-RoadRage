@@ -1,7 +1,12 @@
 package model;
 
-import java.util.Map;
+import java.util.*;
 
+/**
+ *
+ * @Author
+ * @version
+ */
 public class Truck extends AbstractVehicle {
 
     public Truck(int x, int y, Direction myDirection) {
@@ -10,23 +15,27 @@ public class Truck extends AbstractVehicle {
 
     @Override
     public boolean canPass(Terrain theTerrain, Light theLight) {
-        return false;
+        return !theTerrain.equals(Terrain.CROSSWALK) || !theLight.equals(Light.RED);
     }
 
     @Override
     public Direction chooseDirection(Map<Direction, Terrain> theNeighbors) {
-        return null;
-    }
+        Direction[] directions = {currentDirection, currentDirection.left(), currentDirection.right()};
+        Collections.shuffle(Arrays.asList(directions));
 
+        for (Direction testDirection : directions) {
+            if (theNeighbors.get(testDirection).equals(Terrain.STREET) || theNeighbors.get(testDirection).equals(Terrain.CROSSWALK)
+                    || theNeighbors.get(testDirection).equals(Terrain.LIGHT)) {
+                return testDirection;
+            }
+        }
+
+        return currentDirection.reverse();
+    }
 
     @Override
     public int getDeathTime() {
         //truck can't die
         return 0;
-    }
-
-    @Override
-    public String toString(){
-        return null;
     }
 }

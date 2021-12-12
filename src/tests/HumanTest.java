@@ -11,12 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import model.Direction;
-import model.Human;
 import model.Light;
 import model.Terrain;
 //import org.junit.Test;

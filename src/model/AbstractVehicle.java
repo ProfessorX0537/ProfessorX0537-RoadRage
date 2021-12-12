@@ -1,26 +1,29 @@
 package model;
-
+/**
+ *
+ * @Author
+ * @version
+ */
 public abstract class AbstractVehicle implements Vehicle {
-    protected Direction rndDirection = Direction.random();
 
-    private static int poked = 0;
+    private  int poked = 0;
 
-    private static boolean deadOrAlive = true;
+    private  boolean deadOrAlive = true;
 
     private final int initialX;
 
     private final int initialY;
 
-    protected static Direction currentDirection;
+    protected Direction currentDirection;
 
-    protected static int currentX;
+    private int currentX;
 
-    protected static int currentY;
+    private int currentY;
 
 
     protected AbstractVehicle(int x, int y, Direction myDirection) {
-        this.initialX = x;
-        this.initialY = y;
+        initialX = x;
+        initialY = y;
 
         currentX = x;
         currentY = y;
@@ -30,16 +33,16 @@ public abstract class AbstractVehicle implements Vehicle {
 
     @Override
     public void collide(Vehicle theOther) {
-        if (this.getDeathTime() < theOther.getDeathTime()) {
+        if (getDeathTime() > theOther.getDeathTime()) {
             deadOrAlive = false;
-            //change image
-            //to get dead image call getClass().getSimpleName().toLowerCase() + "_dead.gif"
+            getImageFileName();
         }
     }
 
     @Override
     public String getImageFileName() {
-        return getClass().getSimpleName().toLowerCase() + ".gif";
+        return getClass().getSimpleName().toLowerCase() + (deadOrAlive ? ".gif" : "_dead.gif");
+
     }
 
     @Override
@@ -49,11 +52,11 @@ public abstract class AbstractVehicle implements Vehicle {
 
     @Override
     public void poke() {
-        if (this.isAlive()) {
-            setDirection(rndDirection);
+        poked++;
+        if (poked >= getDeathTime()) {
+            setDirection(Direction.random());
+            deadOrAlive = true;
             poked = 0;
-        } else {
-            poked++;
         }
     }
 
@@ -61,11 +64,6 @@ public abstract class AbstractVehicle implements Vehicle {
     public void reset() {
         setX(initialX);
         setY(initialY);
-    }
-
-    @Override
-    public void setDirection(Direction theDir) {
-
     }
 
     @Override
@@ -89,7 +87,17 @@ public abstract class AbstractVehicle implements Vehicle {
     }
 
     @Override
+    public void setDirection(Direction theDir) {
+        currentDirection = theDir;
+    }
+
+    @Override
     public Direction getDirection() {
-        return null;
+        return currentDirection;
+    }
+
+    @Override
+    public String toString(){
+        return getClass().getSimpleName().toLowerCase();
     }
 }
