@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
-public class Human extends AbstractVehicle {
+public final class Human extends AbstractVehicle {
     public Human(int x, int y, Direction myDirection) {
         super(x, y, myDirection);
 
@@ -12,8 +12,7 @@ public class Human extends AbstractVehicle {
 
     @Override
     public boolean canPass(Terrain theTerrain, Light theLight) {
-        return true;
-
+        return !theTerrain.equals(Terrain.CROSSWALK) || (theLight.equals(Light.YELLOW) || theLight.equals(Light.RED));
     }
 
     @Override

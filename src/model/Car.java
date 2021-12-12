@@ -1,27 +1,22 @@
 package model;
 
-import java.util.*;
+import java.util.Map;
 
-/**
- *
- * @Author
- * @version
- */
-public final class Truck extends AbstractVehicle {
+public final class Car extends AbstractVehicle{
 
-    public Truck(int x, int y, Direction myDirection) {
-        super(x,y,myDirection);
+    public Car(int x, int y, Direction myDirection) {
+        super(x, y, myDirection);
     }
 
     @Override
     public boolean canPass(Terrain theTerrain, Light theLight) {
-        return !theTerrain.equals(Terrain.CROSSWALK) || !theLight.equals(Light.RED);
+        return (!theTerrain.equals(Terrain.LIGHT) || !theLight.equals(Light.RED)) && (!theTerrain.equals(Terrain.CROSSWALK)
+                || theLight.equals(Light.GREEN));
     }
 
     @Override
     public Direction chooseDirection(Map<Direction, Terrain> theNeighbors) {
         Direction[] directions = {currentDirection, currentDirection.left(), currentDirection.right()};
-        Collections.shuffle(Arrays.asList(directions));
 
         for (Direction testDirection : directions) {
             if (theNeighbors.get(testDirection).equals(Terrain.STREET) || theNeighbors.get(testDirection).equals(Terrain.CROSSWALK)
@@ -33,9 +28,16 @@ public final class Truck extends AbstractVehicle {
         return currentDirection.reverse();
     }
 
+    /**
+     * Returns the number of updates between this vehicle's death and when it
+     * should be revived.
+     *
+     * @return the number of updates.
+     */
     @Override
     public int getDeathTime() {
-        //truck can't die
-        return 0;
+        return 15;
     }
+
+
 }
