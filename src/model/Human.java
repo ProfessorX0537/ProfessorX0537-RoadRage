@@ -4,6 +4,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ *
+ * @Author
+ * @version
+ */
 public final class Human extends AbstractVehicle {
     public Human(int x, int y, Direction myDirection) {
         super(x, y, myDirection);
@@ -22,7 +27,6 @@ public final class Human extends AbstractVehicle {
 
         for (Direction testDirection : directions) {
             if (theNeighbors.get(testDirection).equals(Terrain.CROSSWALK)) return testDirection;
-
         }
 
         for (Direction testDirection : directions) {

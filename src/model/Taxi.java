@@ -2,6 +2,11 @@ package model;
 
 import java.util.Map;
 
+/**
+ *
+ * @Author
+ * @version
+ */
 public class Taxi extends AbstractVehicle{
 
     private boolean wait = true;

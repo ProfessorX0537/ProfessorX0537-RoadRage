@@ -2,6 +2,11 @@ package model;
 
 import java.util.Map;
 
+/**
+ *
+ * @Author
+ * @version
+ */
 public final class Car extends AbstractVehicle{
 
     public Car(int x, int y, Direction myDirection) {

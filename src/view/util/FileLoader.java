@@ -104,11 +104,10 @@ public final class FileLoader {
             //TODO important to print vehicle images
 
             switch (vehicleType) {
-/*              case 'B': // Bicycle
+                case 'B': // Bicycle
                     vehicles.add(new Bicycle(vehicleX, vehicleY,
                                                Direction.valueOf(vehicleDirection)));
                     break;
-*/
                 case 'A': //ATV
                     vehicles.add(new Atv(vehicleX, vehicleY,
                                            Direction.valueOf(vehicleDirection)));
