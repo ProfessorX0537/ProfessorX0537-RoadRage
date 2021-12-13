@@ -13,7 +13,7 @@ public class Taxi extends AbstractVehicle{
     /**
      * boolean flag to make taxi wait at red crosswalk for a period of time
      */
-    private boolean wait = true;
+    private static boolean wait = true;
     /**
      * keep track of number of steps taxi has waited
      */
