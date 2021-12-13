@@ -31,7 +31,7 @@ public class Atv extends AbstractVehicle {
     @Override
     public boolean canPass(Terrain theTerrain, Light theLight) {
         //can pass through all terrain
-        return true;
+        return !theTerrain.equals(Terrain.WALL);
     }
 
     /**

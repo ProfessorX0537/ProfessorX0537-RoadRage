@@ -49,7 +49,7 @@ public class HumanTest {
         assertEquals( 11, h.getY(), "Human y coordinate not initialized correctly!");
         assertEquals(Direction.NORTH, h.getDirection(),"Human direction not initialized correctly!" );
         assertEquals( 45, h.getDeathTime(), "Human death time not initialized correctly!");
-        //assertTrue(h.isAlive(), "Human isAlive() fails initially!");
+        Assertions.assertTrue(h.isAlive(), "Human isAlive() fails initially!");
 
     }
     
@@ -112,8 +112,7 @@ public class HumanTest {
                     }
                 } else if (!validTerrain.contains(destinationTerrain)) {
  
-                    Assertions.assertFalse(
-                        human.canPass(destinationTerrain, currentLightCondition), "Human should NOT be able to pass " + destinationTerrain
+                    Assertions.assertFalse(human.canPass(destinationTerrain, currentLightCondition), "Human should NOT be able to pass " + destinationTerrain
                                     + ", with light " + currentLightCondition);
                 }
             } 

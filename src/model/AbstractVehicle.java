@@ -179,6 +179,6 @@ public abstract class AbstractVehicle implements Vehicle {
      */
     @Override
     public String toString(){
-        return getClass().getSimpleName().toLowerCase();
+        return getClass().getSimpleName();
     }
 }
