@@ -4,7 +4,11 @@
 
 package tests;
 
+import model.Direction;
+import model.Human;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,6 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import model.Light;
 import model.Terrain;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 //import org.junit.Test;
 
 /**
@@ -33,31 +42,30 @@ public class HumanTest {
     @org.junit.jupiter.api.Test
     // @Test
     public void testHumanConstructor() {
-    /*
+
         final Human h = new Human(10, 11, Direction.NORTH);
         
-        assertEquals("Human x coordinate not initialized correctly!", 10, h.getX());
-        assertEquals("Human y coordinate not initialized correctly!", 11, h.getY());
-        assertEquals("Human direction not initialized correctly!",
-                     Direction.NORTH, h.getDirection());
-        assertEquals("Human death time not initialized correctly!", 45, h.getDeathTime());
-        assertTrue("Human isAlive() fails initially!", h.isAlive());
-   */
+        assertEquals(10, h.getX(),"Human x coordinate not initialized correctly!");
+        assertEquals( 11, h.getY(), "Human y coordinate not initialized correctly!");
+        assertEquals(Direction.NORTH, h.getDirection(),"Human direction not initialized correctly!" );
+        assertEquals( 45, h.getDeathTime(), "Human death time not initialized correctly!");
+        //assertTrue(h.isAlive(), "Human isAlive() fails initially!");
+
     }
     
     /** Test method for Human setters. */
     @Test
     public void testHumanSetters() {
-/*        final Human h = new Human(10, 11, Direction.NORTH);
+        final Human h = new Human(10, 11, Direction.NORTH);
         
         h.setX(12);
-        assertEquals("Human setX failed!", 12, h.getX());
+        assertEquals( 12, h.getX(), "Human setX failed!");
         h.setY(13);
-        assertEquals("Human setY failed!", 13, h.getY());
+        assertEquals(13, h.getY(),"Human setY failed!");
         h.setDirection(Direction.SOUTH);
-        assertEquals("Human setDirection failed!", Direction.SOUTH, h.getDirection());
+        assertEquals(Direction.SOUTH, h.getDirection(), "Human setDirection failed!");
 
- */
+
     }
 
     /**
@@ -75,10 +83,11 @@ public class HumanTest {
         // Humans should only reverse direction if no other option is available
         // so we need to be sure to test that requirement also
 
- /*
-        final List<Terrain> validTerrain = new ArrayList<>();
+
+        final var validTerrain = new ArrayList<>();
         validTerrain.add(Terrain.GRASS);
         validTerrain.add(Terrain.CROSSWALK);
+        validTerrain.add(Terrain.TRAIL);
                 
         final Human human = new Human(0, 0, Direction.NORTH);
         // test each terrain type as a destination
@@ -88,34 +97,29 @@ public class HumanTest {
                 if (destinationTerrain == Terrain.GRASS) {
                 
                     // humans can pass GRASS under any light condition
-                    assertTrue("Human should be able to pass GRASS"
-                               + ", with light " + currentLightCondition,
-                               human.canPass(destinationTerrain, currentLightCondition));
+                    Assertions.assertTrue(human.canPass(destinationTerrain, currentLightCondition), "Human should be able to pass GRASS"
+                                    + ", with light " + currentLightCondition);
                 } else if (destinationTerrain == Terrain.CROSSWALK) {
                            // humans can pass CROSSWALK
                            // if the light is YELLOW or RED but not GREEN
 
                     if (currentLightCondition == Light.GREEN) {
-                        assertFalse("Human should NOT be able to pass " + destinationTerrain
-                            + ", with light " + currentLightCondition,
-                            human.canPass(destinationTerrain,
-                                          currentLightCondition));
+                        Assertions.assertFalse(human.canPass(destinationTerrain, currentLightCondition), "Human should NOT be able to pass " + destinationTerrain
+                                        + ", with light " + currentLightCondition);
                     } else { // light is yellow or red
-                        assertTrue("Human should be able to pass " + destinationTerrain
-                            + ", with light " + currentLightCondition,
-                            human.canPass(destinationTerrain,
-                                          currentLightCondition));
+                        Assertions.assertTrue(human.canPass(destinationTerrain, currentLightCondition), "Human should be able to pass " + destinationTerrain
+                                        + ", with light " + currentLightCondition);
                     }
                 } else if (!validTerrain.contains(destinationTerrain)) {
  
-                    assertFalse("Human should NOT be able to pass " + destinationTerrain
-                        + ", with light " + currentLightCondition,
-                        human.canPass(destinationTerrain, currentLightCondition));
+                    Assertions.assertFalse(
+                        human.canPass(destinationTerrain, currentLightCondition), "Human should NOT be able to pass " + destinationTerrain
+                                    + ", with light " + currentLightCondition);
                 }
             } 
         }
 
-  */
+
     }
 
     /**
@@ -123,7 +127,7 @@ public class HumanTest {
      */
     @Test
     public void testChooseDirectionSurroundedByGrass() {
-/*
+
         final Map<Direction, Terrain> neighbors = new HashMap<Direction, Terrain>();
 
         neighbors.put(Direction.WEST, Terrain.GRASS);
@@ -152,15 +156,13 @@ public class HumanTest {
             }
         }
 
- */
-/*
-        assertTrue("Human chooseDirection() fails to select randomly "
-                   + "among all possible valid choices!",
-                   seenWest && seenNorth && seenEast);
+
+
+        Assertions.assertTrue(seenWest && seenNorth && seenEast, "Human chooseDirection() fails to select randomly "
+                        + "among all possible valid choices!");
             
-        assertFalse("Human chooseDirection() reversed direction when not necessary!",
-                    seenSouth);
-*/
+        Assertions.assertFalse(seenSouth, "Human chooseDirection() reversed direction when not necessary!");
+
     }
     
     
@@ -169,9 +171,9 @@ public class HumanTest {
      */
     @Test
     public void testChooseDirectionOnGrassMustReverse() {
- /*
+
         for (final Terrain t : Terrain.values()) {
-            if (t != Terrain.GRASS && t != Terrain.CROSSWALK) {
+            if (t != Terrain.GRASS && t != Terrain.CROSSWALK && t != Terrain.TRAIL) {
                 
                 final Map<Direction, Terrain> neighbors = new HashMap<Direction, Terrain>();
                 neighbors.put(Direction.WEST, t);
@@ -182,14 +184,13 @@ public class HumanTest {
                 final Human human = new Human(0, 0, Direction.NORTH);
                 
                 // the Human must reverse and go SOUTH
-                assertEquals("Human chooseDirection() failed "
-                                + "when reverse was the only valid choice!",
-                             Direction.SOUTH, human.chooseDirection(neighbors));
+                assertEquals(Direction.SOUTH, human.chooseDirection(neighbors), "Human chooseDirection() failed "
+                                + "when reverse was the only valid choice!");
             }
                 
         }
 
-  */
+
     }
     
     
@@ -198,7 +199,7 @@ public class HumanTest {
      */
     @Test
     public void testChooseDirectionOnGrassNearCrosswalk() {
- /*
+
         // If a Human is next to a crosswalk it should always choose to face
         // toward the crosswalk. Except when that would cause the human to reverse
         // direction. A Human will only reverse direction if no other valid option exits.
@@ -217,18 +218,17 @@ public class HumanTest {
             
             
             if (d == Direction.EAST) {
-                assertNotEquals("A human near a crosswalk and facing " + d
-                             + " should not reverse direction!",
-                             Direction.WEST, human.chooseDirection(neighbors));
+                Assertions.assertNotEquals(
+                        Direction.WEST, human.chooseDirection(neighbors), "A human near a crosswalk and facing " + d
+                                     + " should not reverse direction!");
                 
             } else {
-                assertEquals("A human near a crosswalk and facing " + d
-                             + " chose a wrong direction!",
-                             Direction.WEST, human.chooseDirection(neighbors));
+                assertEquals(Direction.WEST, human.chooseDirection(neighbors), "A human near a crosswalk and facing " + d
+                                + " chose a wrong direction!");
             }
         }
 
-  */
+
     }
 
 }

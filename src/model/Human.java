@@ -33,7 +33,8 @@ public final class Human extends AbstractVehicle {
     @Override
     public boolean canPass(Terrain theTerrain, Light theLight) {
         //the human can pass through terrain that isn't a crosswalk with a green light
-        return !theTerrain.equals(Terrain.CROSSWALK) || (theLight.equals(Light.YELLOW) || theLight.equals(Light.RED));
+        return (!theTerrain.equals(Terrain.CROSSWALK) || !theLight.equals(Light.GREEN)) && (!theTerrain.equals(Terrain.STREET) && !theTerrain.equals(Terrain.LIGHT)
+                    && !theTerrain.equals(Terrain.WALL));
     }
 
     /**
